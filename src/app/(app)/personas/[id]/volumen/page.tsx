@@ -105,7 +105,7 @@ export default async function VolumePage({
           />
           {v.zoneTotal ? (
             <p className="mb-3 text-sm text-muted">
-              <span className="tnum mr-1 font-display text-3xl font-extrabold text-ink">{kilos ? `${formatNum(Math.round(v.zoneTotal.value / 100) / 10)} t` : v.zoneTotal.value}</span>
+              <span className="tnum mr-1 font-display text-3xl font-semibold text-ink">{kilos ? `${formatNum(Math.round(v.zoneTotal.value / 100) / 10)} t` : v.zoneTotal.value}</span>
               {kilos ? 'movidos' : 'series'} en la semana {v.zoneTotal.week}
               {v.zoneTotal.changePct != null ? ` · ${v.zoneTotal.changePct > 0 ? '+' : v.zoneTotal.changePct < 0 ? '−' : ''}${Math.abs(v.zoneTotal.changePct)} % desde la ${v.zoneTotal.fromWeek}` : ''}
             </p>
@@ -139,7 +139,7 @@ export default async function VolumePage({
           />
           {v.strength.last != null ? (
             <p className="mb-3 text-sm text-muted">
-              <span className="tnum mr-1 font-display text-3xl font-extrabold text-ink">
+              <span className="tnum mr-1 font-display text-3xl font-semibold text-ink">
                 {v.strength.last > 0 ? '+' : v.strength.last < 0 ? '−' : ''}
                 {formatNum(Math.abs(v.strength.last))} %
               </span>

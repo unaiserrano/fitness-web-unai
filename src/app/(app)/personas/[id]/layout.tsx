@@ -19,28 +19,21 @@ export default async function AthleteLayout({ children, params }: { children: Re
 
   return (
     <div>
-      <div className="band-glow relative mb-6 overflow-hidden rounded-[28px] px-5 pb-5 pt-6 text-band-ink shadow-[0_24px_60px_-30px_rgba(0,0,0,0.6)] sm:mb-8 sm:px-8 sm:pb-7 sm:pt-8">
+      <div className="band-glow mb-8 rounded-[var(--radius-card)] px-5 py-6 text-band-ink sm:px-8 sm:py-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand">Seguimiento de</p>
-            <h1 className="mt-1 break-words font-display text-4xl font-black uppercase leading-[0.95] tracking-tight sm:text-6xl">{athlete.name}</h1>
-            {athlete.subtitle ? <p className="mt-2 max-w-xl text-[15px] text-band-ink/70">{athlete.subtitle}</p> : null}
+            <p className="kicker !text-band-ink/60">Seguimiento de</p>
+            <h1 className="mt-2 break-words text-4xl leading-none sm:text-6xl">{athlete.name}</h1>
+            {athlete.subtitle ? <p className="mt-3 max-w-xl text-[15px] text-band-ink/70">{athlete.subtitle}</p> : null}
           </div>
           <AthleteSwitcher id={id} athletes={all.map((a) => ({ id: a.id, name: a.name }))} />
         </div>
         {stats.length ? (
-          <dl className="mt-6 flex flex-wrap gap-2 sm:gap-3">
+          <dl className="mt-7 flex flex-wrap gap-x-8 gap-y-4 border-t border-band-ink/20 pt-5">
             {stats.map((s) => (
-              <div
-                key={s.label}
-                className={
-                  s.accent
-                    ? 'rounded-2xl bg-brand px-4 py-2.5 text-brand-ink shadow-[0_10px_24px_-12px_var(--brand)]'
-                    : 'rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-2.5 backdrop-blur-sm'
-                }
-              >
-                <dd className="tnum font-display text-2xl font-extrabold leading-none">{s.value}</dd>
-                <dt className="mt-1 text-[11px] font-semibold uppercase tracking-wider opacity-75">{s.label}</dt>
+              <div key={s.label}>
+                <dt className="kicker !text-band-ink/60">{s.label}</dt>
+                <dd className={`figure mt-1.5 text-3xl ${s.accent ? 'text-brand' : ''}`}>{s.value}</dd>
               </div>
             ))}
           </dl>

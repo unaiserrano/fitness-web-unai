@@ -38,7 +38,7 @@ export function CoachNotesEditor({ notes, proposal }: { notes: CoachNotes; propo
       />
       <div className="grid gap-4 md:grid-cols-2">
         {FIELDS.map(([k, label, border]) => (
-          <label key={k} className={`flex flex-col gap-1.5 rounded-2xl border-t-4 bg-surface-2/60 p-3 ${border}`}>
+          <label key={k} className={`flex flex-col gap-1.5 rounded-md border-t-4 bg-surface-2/60 p-3 ${border}`}>
             <span className="text-sm font-semibold">{label}</span>
             <textarea
               className="field min-h-28 text-sm"

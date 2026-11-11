@@ -45,9 +45,9 @@ export function FoodsManager({ foods, uses }: { foods: Food[]; uses: Record<stri
     <div className="flex flex-col gap-5">
       <ToastView toast={toast} />
       <div className="grid gap-3 sm:grid-cols-3">
-        <Tile label="Alimentos" value={foods.length} cls="from-brand/20" />
-        <Tile label="Con etiqueta" value={labelled} cls="from-lime/50" />
-        <Tile label="Valores genéricos" value={foods.length - labelled} cls="from-info/20" />
+        <Tile label="Alimentos" value={foods.length} />
+        <Tile label="Con etiqueta" value={labelled} />
+        <Tile label="Valores genéricos" value={foods.length - labelled} />
       </div>
 
       <Card>
@@ -164,7 +164,7 @@ function FoodRow({ food, uses, onSave, onDeleted }: { food: Food; uses: string; 
       </select>
       <button
         type="button"
-        className={cn('grid h-8 place-items-center rounded-full text-xs font-semibold', armed ? 'bg-bad text-white' : 'text-muted hover:bg-bad-soft hover:text-bad')}
+        className={cn('grid h-8 place-items-center rounded-md text-xs font-semibold', armed ? 'bg-bad text-white' : 'text-muted hover:bg-bad-soft hover:text-bad')}
         aria-label={armed ? `Pulsa otra vez para borrar ${food.name}` : `Borrar ${food.name}`}
         onClick={async () => {
           if (!armed) {
@@ -182,11 +182,11 @@ function FoodRow({ food, uses, onSave, onDeleted }: { food: Food; uses: string; 
   );
 }
 
-function Tile({ label, value, cls }: { label: string; value: number; cls: string }) {
+function Tile({ label, value }: { label: string; value: number }) {
   return (
-    <div className={cn('rounded-[var(--radius-card)] border border-line bg-gradient-to-br to-surface p-5', cls)}>
-      <p className="text-xs font-bold uppercase tracking-wider text-muted">{label}</p>
-      <p className="tnum mt-1 font-display text-4xl font-extrabold">{value}</p>
+    <div className="rounded-[var(--radius-card)] border border-line bg-surface p-5">
+      <p className="kicker">{label}</p>
+      <p className="figure mt-2 text-4xl">{value}</p>
     </div>
   );
 }

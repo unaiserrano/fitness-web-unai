@@ -29,7 +29,7 @@ export default async function NotePage({ params, searchParams }: { params: Promi
         {chosen ? (
           <>
             <CopyButton text={text} label="Copiar la nota" copiedLabel="Nota copiada" />
-            <pre className="mt-4 max-h-[60vh] overflow-auto whitespace-pre-wrap rounded-2xl bg-surface-2 p-4 font-mono text-[13px] leading-relaxed">{text}</pre>
+            <pre className="mt-4 max-h-[60vh] overflow-auto whitespace-pre-wrap rounded-md bg-surface-2 p-4 font-mono text-[13px] leading-relaxed">{text}</pre>
           </>
         ) : (
           <EmptyState title="Sin semanas">Crea la primera semana en Rutina.</EmptyState>

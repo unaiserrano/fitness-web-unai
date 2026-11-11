@@ -6,14 +6,14 @@ import { cn } from '@/components/ui/cn';
 
 const LINKS = [
   { href: '/', label: 'Personas', match: (p: string) => p === '/' || p.startsWith('/personas') },
-  { href: '/biblioteca', label: 'Biblioteca', match: (p: string) => p.startsWith('/biblioteca') },
+  { href: '/biblioteca', label: 'Ejercicios', match: (p: string) => p.startsWith('/biblioteca') },
   { href: '/alimentos', label: 'Alimentos', match: (p: string) => p.startsWith('/alimentos') },
 ];
 
 export function MainNav() {
   const pathname = usePathname();
   return (
-    <nav aria-label="Principal" className="ml-1 flex min-w-0 items-center gap-0.5 overflow-x-auto sm:ml-6 sm:gap-1">
+    <nav aria-label="Principal" className="flex min-w-0 items-center gap-4 overflow-x-auto sm:gap-6">
       {LINKS.map((l) => {
         const active = l.match(pathname);
         return (
@@ -21,7 +21,10 @@ export function MainNav() {
             key={l.href}
             href={l.href}
             aria-current={active ? 'page' : undefined}
-            className={cn('whitespace-nowrap rounded-full px-2.5 py-1.5 text-[13px] font-semibold transition-colors sm:px-3 sm:text-sm', active ? 'bg-band-ink text-band' : 'text-band-ink/70 hover:text-band-ink')}
+            className={cn(
+              'whitespace-nowrap border-b-2 py-[15px] text-sm font-medium transition-colors',
+              active ? 'border-brand text-ink' : 'border-transparent text-muted hover:text-ink',
+            )}
           >
             {l.label}
           </Link>

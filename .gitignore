@@ -21,3 +21,8 @@ data/*.json
 .DS_Store
 .vercel
 coverage/
+
+# datos reales / material privado (no se sube nunca)
+private/
+*.legacy.html
+Seguimiento de *.html

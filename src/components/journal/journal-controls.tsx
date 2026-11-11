@@ -67,7 +67,7 @@ export function DeleteMilestone({ athleteId, id }: { athleteId: string; id: stri
     <button
       type="button"
       disabled={pending}
-      className={cn('shrink-0 rounded-full px-2 py-1 text-xs font-semibold transition-colors', armed ? 'bg-bad text-white' : 'text-muted hover:bg-bad-soft hover:text-bad')}
+      className={cn('shrink-0 rounded-sm px-2 py-1 text-xs font-semibold transition-colors', armed ? 'bg-bad text-white' : 'text-muted hover:bg-bad-soft hover:text-bad')}
       aria-label={armed ? 'Pulsa otra vez para borrar' : 'Borrar hito'}
       onClick={() => {
         if (!armed) {
@@ -96,7 +96,7 @@ export function StarToggle({ athleteId, week, markKey, on }: { athleteId: string
       aria-pressed={value}
       aria-label={value ? 'Quitar de importantes' : 'Marcar como importante'}
       disabled={pending}
-      className={cn('grid size-8 shrink-0 place-items-center rounded-full transition-all', value ? 'bg-warn-soft text-warn scale-105' : 'text-muted/60 hover:bg-surface-2 hover:text-warn')}
+      className={cn('grid size-8 shrink-0 place-items-center rounded-md transition-all', value ? 'bg-warn-soft text-warn scale-105' : 'text-muted/60 hover:bg-surface-2 hover:text-warn')}
       onClick={() =>
         start(async () => {
           setValue(!value);

@@ -64,7 +64,7 @@ export function LibraryManager({ items, groups }: { items: LibraryExercise[]; gr
           const isOpen = open === l.slug;
           const split = secondaryGroups(lib, l.name);
           return (
-            <li key={l.slug} className="rounded-2xl border border-line bg-surface">
+            <li key={l.slug} className="rounded-md border border-line bg-surface">
               <button
                 type="button"
                 className="flex w-full flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 text-left"

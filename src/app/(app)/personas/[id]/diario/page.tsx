@@ -42,7 +42,7 @@ export default async function JournalPage({ params }: { params: Promise<{ id: st
         week: w.number,
         key: `${w.number}-${c.key}`,
         node: (
-          <div className="flex gap-3 rounded-2xl border border-warn/30 bg-warn-soft px-4 py-3">
+          <div className="flex gap-3 rounded-md border border-warn/30 bg-warn-soft px-4 py-3">
             <MessageCircle aria-hidden className="mt-0.5 size-4 shrink-0 text-warn" />
             <div className="min-w-0">
               <q className="text-[15px]">{c.text}</q>
@@ -91,7 +91,7 @@ export default async function JournalPage({ params }: { params: Promise<{ id: st
         <MilestoneForm athleteId={id} weeks={all.map((w) => w.number)} />
       </Card>
 
-      <ol className="relative flex flex-col gap-5 before:absolute before:bottom-4 before:left-[27px] before:top-4 before:w-0.5 before:bg-gradient-to-b before:from-brand before:via-line before:to-transparent sm:before:left-[35px]">
+      <ol className="relative flex flex-col gap-5 before:absolute before:bottom-4 before:left-[27px] before:top-4 before:w-px before:bg-line sm:before:left-[35px]">
         {all.map((w) => {
           const done = weekHasResults(w);
           const sessions = sessionsDone(w);
@@ -104,7 +104,7 @@ export default async function JournalPage({ params }: { params: Promise<{ id: st
             <li key={w.number} id={`sem-${w.number}`} className="relative flex gap-3 sm:gap-5">
               <div
                 className={cn(
-                  'relative z-10 grid size-14 shrink-0 place-items-center rounded-2xl text-center font-display font-extrabold shadow-sm sm:size-[72px]',
+                  'relative z-10 grid size-14 shrink-0 place-items-center rounded-md text-center font-display font-semibold sm:size-[72px]',
                   done ? 'bg-ink text-bg' : 'bg-brand text-brand-ink',
                 )}
               >
@@ -140,10 +140,10 @@ export default async function JournalPage({ params }: { params: Promise<{ id: st
                 ) : null}
 
                 {recs.length ? (
-                  <div className="flex gap-3 rounded-2xl bg-gradient-to-r from-lime/50 to-lime/10 px-4 py-3">
+                  <div className="flex gap-3 rounded-md border-l-4 border-lime-ink/40 bg-lime px-4 py-3 text-lime-ink">
                     <Trophy aria-hidden className="mt-0.5 size-5 shrink-0 text-lime-ink dark:text-lime" />
                     <div className="min-w-0">
-                      <p className="text-xs font-bold uppercase tracking-wider text-lime-ink dark:text-lime">Récords</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-lime-ink">Récords</p>
                       <ul className="mt-1 flex flex-col gap-0.5 text-sm">
                         {recs.map((r) => (
                           <li key={r}>{r}</li>
@@ -186,7 +186,7 @@ export default async function JournalPage({ params }: { params: Promise<{ id: st
                     <summary className="cursor-pointer text-sm font-semibold text-brand">Rutina que le pasaste</summary>
                     <div className="mt-3 grid gap-3 md:grid-cols-2">
                       {w.days.map((d) => (
-                        <div key={d.day} className="rounded-2xl bg-surface-2 p-3">
+                        <div key={d.day} className="rounded-md bg-surface-2 p-3">
                           <p className="mb-1.5 text-sm font-bold">
                             {d.day}
                             {d.block ? <span className="font-normal text-muted"> · {d.block}</span> : null}
@@ -220,7 +220,7 @@ export default async function JournalPage({ params }: { params: Promise<{ id: st
 function MilestoneRow({ m, athleteId }: { m: Milestone; athleteId: string }) {
   const s = KIND_STYLE[m.kind];
   return (
-    <div className={cn('flex items-start gap-3 rounded-2xl border px-4 py-3', s.cls)}>
+    <div className={cn('flex items-start gap-3 rounded-md border px-4 py-3', s.cls)}>
       <s.Icon aria-hidden className="mt-0.5 size-4 shrink-0" />
       <div className="min-w-0 flex-1 text-ink">
         <span className="mr-2 text-xs font-bold uppercase tracking-wider opacity-80">{s.label}</span>
@@ -233,7 +233,7 @@ function MilestoneRow({ m, athleteId }: { m: Milestone; athleteId: string }) {
 
 function NoteBox({ title, items, cls }: { title: string; items: string[]; cls: string }) {
   return (
-    <div className={cn('rounded-2xl border p-3', cls)}>
+    <div className={cn('rounded-md border p-3', cls)}>
       <p className="mb-1 text-sm font-bold">{title}</p>
       {items.length ? (
         <ul className="list-disc pl-5 text-sm">
@@ -249,11 +249,11 @@ function NoteBox({ title, items, cls }: { title: string; items: string[]; cls: s
 }
 
 function MiniStat({ label, value, tone }: { label: string; value: number; tone: 'brand' | 'lime' | 'info' }) {
-  const cls = { brand: 'from-brand/15 text-brand', lime: 'from-lime/40 text-lime-ink dark:text-lime', info: 'from-info/15 text-info' }[tone];
+  const accent = { brand: 'text-brand', lime: 'text-ok', info: 'text-info' }[tone];
   return (
-    <div className={cn('rounded-[var(--radius-card)] border border-line bg-gradient-to-br to-surface p-5', cls)}>
-      <p className="text-xs font-bold uppercase tracking-wider opacity-80">{label}</p>
-      <p className="tnum mt-1 font-display text-4xl font-extrabold text-ink">{value}</p>
+    <div className="rounded-[var(--radius-card)] border border-line bg-surface p-5">
+      <p className={cn('kicker', accent)}>{label}</p>
+      <p className="figure mt-2 text-4xl">{value}</p>
     </div>
   );
 }

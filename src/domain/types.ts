@@ -163,3 +163,13 @@ export const defaultConfig = (): AthleteConfig => ({
   remember: [...DEFAULT_REMEMBER],
   muscleGroups: [...DEFAULT_MUSCLE_GROUPS],
 });
+
+/** Resumen precalculado de una persona para la pantalla de inicio (evita cargar todas sus semanas). */
+export interface AthleteSummary {
+  plan: number | null;
+  last: { number: number; sessions: number } | null;
+  stagnant: number;
+  deload: boolean;
+  /** Entrenos hechos en cada una de las últimas semanas. */
+  trend: number[];
+}

@@ -33,7 +33,7 @@ export function ExerciseEditor({ ex, day, di, ei, count }: { ex: Exercise; day: 
   return (
     <article className="rounded-[var(--radius-card)] border border-line bg-surface p-4 sm:p-5">
       <div className="flex items-center gap-3">
-        <span className="tnum font-display text-2xl font-extrabold text-brand">{String(ei + 1).padStart(2, '0')}</span>
+        <span className="tnum font-display text-2xl font-semibold text-brand">{String(ei + 1).padStart(2, '0')}</span>
         <input
           className="field min-w-0 flex-1 font-semibold"
           list="library-names"
@@ -54,12 +54,12 @@ export function ExerciseEditor({ ex, day, di, ei, count }: { ex: Exercise; day: 
           }}
         />
         <div className="flex shrink-0 items-center">
-          <button type="button" className="grid size-9 place-items-center rounded-full text-muted hover:bg-surface-2 disabled:opacity-30" disabled={ei === 0} aria-label="Subir ejercicio" onClick={() => move(-1)}>
+          <button type="button" className="grid size-9 place-items-center rounded-md text-muted hover:bg-surface-2 disabled:opacity-30" disabled={ei === 0} aria-label="Subir ejercicio" onClick={() => move(-1)}>
             <ArrowUp aria-hidden className="size-4" />
           </button>
           <button
             type="button"
-            className="grid size-9 place-items-center rounded-full text-muted hover:bg-surface-2 disabled:opacity-30"
+            className="grid size-9 place-items-center rounded-md text-muted hover:bg-surface-2 disabled:opacity-30"
             disabled={ei === count - 1}
             aria-label="Bajar ejercicio"
             onClick={() => move(1)}
@@ -68,7 +68,7 @@ export function ExerciseEditor({ ex, day, di, ei, count }: { ex: Exercise; day: 
           </button>
           <button
             type="button"
-            className="grid size-9 place-items-center rounded-full text-muted hover:bg-bad-soft hover:text-bad"
+            className="grid size-9 place-items-center rounded-md text-muted hover:bg-bad-soft hover:text-bad"
             aria-label={`Quitar ${ex.name}`}
             onClick={() => mutate((w) => void w.days[di].exercises.splice(ei, 1))}
           >
@@ -88,12 +88,12 @@ export function ExerciseEditor({ ex, day, di, ei, count }: { ex: Exercise; day: 
       </div>
 
       {st ? (
-        <p className="mt-3 rounded-xl bg-warn-soft px-3 py-2 text-sm text-ink">
+        <p className="mt-3 rounded-md bg-warn-soft px-3 py-2 text-sm text-ink">
           <strong>Estancado: {st.weeks} semanas sin mejorar.</strong> Su mejor serie: {st.best} (sem {st.bestWeek}).
         </p>
       ) : null}
       {prev?.notes ? (
-        <p className="mt-3 rounded-xl border-l-4 border-brand bg-brand-soft/60 px-3 py-2 text-sm">
+        <p className="mt-3 rounded-md border-l-4 border-brand bg-brand-soft/60 px-3 py-2 text-sm">
           <strong>
             {athlete.name} (sem {prev.week}):
           </strong>{' '}
@@ -160,7 +160,7 @@ export function ExerciseEditor({ ex, day, di, ei, count }: { ex: Exercise; day: 
         </ul>
         <button
           type="button"
-          className="mt-2 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-semibold text-muted hover:bg-surface-2 hover:text-ink"
+          className="mt-2 inline-flex items-center gap-1.5 rounded-sm px-3 py-1.5 text-sm font-semibold text-muted hover:bg-surface-2 hover:text-ink"
           onClick={() =>
             upd((x) => {
               const l = x.sets[x.sets.length - 1];

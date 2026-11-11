@@ -86,16 +86,16 @@ export function AthleteForm({ initial, isNew = false }: { initial: Athlete; isNe
         </div>
         <ol className="mt-4 flex flex-col gap-3">
           {a.config.rehab.map((r, i) => (
-            <li key={i} className="rounded-2xl bg-surface-2/60 p-3">
+            <li key={i} className="rounded-md bg-surface-2/60 p-3">
               <div className="flex items-center gap-2">
-                <span className="tnum font-display text-lg font-extrabold text-brand">{String(i + 1).padStart(2, '0')}</span>
+                <span className="tnum font-display text-lg font-semibold text-brand">{String(i + 1).padStart(2, '0')}</span>
                 <input className="field min-w-0 flex-1 font-semibold" aria-label="Ejercicio de rehab" value={r.name} onChange={(e) => setRehab(i, { name: e.target.value })} />
-                <button type="button" className="grid size-8 place-items-center rounded-full text-muted hover:bg-surface disabled:opacity-30" aria-label="Subir" disabled={i === 0} onClick={() => moveRehab(i, -1)}>
+                <button type="button" className="grid size-8 place-items-center rounded-md text-muted hover:bg-surface disabled:opacity-30" aria-label="Subir" disabled={i === 0} onClick={() => moveRehab(i, -1)}>
                   <ArrowUp aria-hidden className="size-4" />
                 </button>
                 <button
                   type="button"
-                  className="grid size-8 place-items-center rounded-full text-muted hover:bg-surface disabled:opacity-30"
+                  className="grid size-8 place-items-center rounded-md text-muted hover:bg-surface disabled:opacity-30"
                   aria-label="Bajar"
                   disabled={i === a.config.rehab.length - 1}
                   onClick={() => moveRehab(i, 1)}
@@ -104,7 +104,7 @@ export function AthleteForm({ initial, isNew = false }: { initial: Athlete; isNe
                 </button>
                 <button
                   type="button"
-                  className="grid size-8 place-items-center rounded-full text-muted hover:bg-bad-soft hover:text-bad"
+                  className="grid size-8 place-items-center rounded-md text-muted hover:bg-bad-soft hover:text-bad"
                   aria-label="Quitar"
                   onClick={() => setCfg('rehab', a.config.rehab.filter((_, j) => j !== i))}
                 >

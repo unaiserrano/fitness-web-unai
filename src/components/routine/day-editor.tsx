@@ -25,7 +25,7 @@ export function DayEditor({ day, di }: { day: Day; di: number }) {
   return (
     <section aria-label={`${day.day} ${day.block}`} className="flex flex-col gap-3">
       <div className="sticky top-16 z-10 -mx-4 flex flex-wrap items-center gap-2 border-b border-line bg-bg/90 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6">
-        <select className="field field-sm w-auto font-display text-base font-extrabold" aria-label="Día" value={day.day} onChange={(e) => mutate((w) => void (w.days[di].day = e.target.value))}>
+        <select className="field field-sm w-auto font-display text-base font-semibold" aria-label="Día" value={day.day} onChange={(e) => mutate((w) => void (w.days[di].day = e.target.value))}>
           {WEEKDAYS.map((d) => (
             <option key={d}>{d}</option>
           ))}

@@ -10,7 +10,7 @@ export function LoginForm({ next }: { next: string }) {
     <form action={action} className="mt-8 flex flex-col gap-4">
       <input type="hidden" name="next" value={next} />
       <label className="flex flex-col gap-1.5">
-        <span className="text-[13px] font-semibold text-muted">Contraseña</span>
+        <span className="text-[13px] font-medium text-muted">Contraseña</span>
         <input
           name="password"
           type="password"

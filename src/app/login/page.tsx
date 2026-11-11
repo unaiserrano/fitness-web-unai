@@ -9,19 +9,22 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   return (
     <main className="grid min-h-dvh place-items-center px-4 py-10">
       <div className="w-full max-w-sm">
-        <p className="font-display text-2xl font-extrabold tracking-tight">
-          seguimiento<span className="text-brand">.</span>
+        <p className="font-display text-3xl font-semibold italic leading-none">
+          cuaderno<span className="text-brand">.</span>
         </p>
-        <h1 className="mt-8 text-3xl font-extrabold">Hola de nuevo</h1>
-        <p className="mt-2 text-muted">Entra para ver rutinas, notas y progreso.</p>
-        {authConfigured() ? (
-          <LoginForm next={next ?? '/'} />
-        ) : (
-          <p className="mt-6 rounded-2xl border border-warn/30 bg-warn-soft p-4 text-sm">
-            Falta configurar la contraseña. Añade <code className="font-semibold">APP_PASSWORD</code> y <code className="font-semibold">AUTH_SECRET</code> en las
-            variables de entorno de Vercel y vuelve a desplegar.
-          </p>
-        )}
+        <div className="mt-10 border-t border-ink/80 pt-8">
+          <p className="kicker">Acceso privado</p>
+          <h1 className="mt-3 text-4xl leading-none">Hola de nuevo</h1>
+          <p className="mt-3 text-muted">Entra para ver rutinas, notas y progreso.</p>
+          {authConfigured() ? (
+            <LoginForm next={next ?? '/'} />
+          ) : (
+            <p className="mt-6 rounded-md border-l-4 border-warn bg-warn-soft p-4 text-sm">
+              Falta configurar la contraseña. Añade <code className="font-semibold">APP_PASSWORD</code> y <code className="font-semibold">AUTH_SECRET</code> en las
+              variables de entorno y vuelve a desplegar.
+            </p>
+          )}
+        </div>
       </div>
     </main>
   );

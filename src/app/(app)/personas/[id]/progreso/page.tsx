@@ -119,14 +119,14 @@ export default async function ProgressPage({ params, searchParams }: { params: P
       ) : null}
 
       <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-        <h2 className="text-xl font-extrabold">Ejercicios</h2>
+        <h2 className="text-xl font-semibold">Ejercicios</h2>
         <RirLegend />
       </div>
 
       {v.groups.map((g) => (
         <section key={g.title} aria-labelledby={`g-${g.title}`} className="flex flex-col gap-4">
           <div className="flex items-baseline gap-3 border-b border-line pb-2">
-            <h3 id={`g-${g.title}`} className="text-lg font-extrabold">
+            <h3 id={`g-${g.title}`} className="text-lg font-semibold">
               {g.title}
             </h3>
             {g.subtitle ? <span className="text-sm text-muted">{g.subtitle}</span> : null}
@@ -137,7 +137,7 @@ export default async function ProgressPage({ params, searchParams }: { params: P
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div className="min-w-0">
                     <h4 className="font-display text-base font-bold">{c.name}</h4>
-                    <p className="tnum mt-0.5 font-display text-2xl font-extrabold tracking-tight">{c.headline}</p>
+                    <p className="tnum mt-0.5 font-display text-2xl font-semibold tracking-tight">{c.headline}</p>
                   </div>
                   {c.isNew ? <Badge tone="lime">Nuevo</Badge> : c.delta ? <Badge tone={c.delta.tone === 'neutral' ? 'neutral' : c.delta.tone === 'ok' ? 'ok' : 'warn'}>{c.delta.text}</Badge> : null}
                 </div>
