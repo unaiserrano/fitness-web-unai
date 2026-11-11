@@ -2,6 +2,7 @@
  * Prepara los datos de la página de Progreso (todo serializable para los componentes de cliente).
  */
 import {
+  average,
   type Athlete,
   type Period,
   type Week,
@@ -48,6 +49,8 @@ export interface ProgressView {
   planNumber: number | null;
   improved: { up: number; total: number };
   bodyWeight: Array<{ week: number; value: number | null }>;
+  /** Energía y satisfacción medias (1 a 5) por semana. */
+  feelings: Array<{ week: number; energia: number | null; satisfaccion: number | null }>;
   sessions: Array<{ week: number; value: number | null; tone: ChartTone }>;
   rehab: Array<{ week: number; value: number | null; tone: ChartTone }> | null;
   deload: { weeks: number; next: number } | null;
@@ -155,6 +158,9 @@ export function buildProgressView(athlete: Athlete, weeks: Week[], period: Perio
     planNumber: plan?.number ?? null,
     improved: { up, total },
     bodyWeight: all.filter((w) => w.bodyWeight != null && showWeek(w.number)).map((w) => ({ week: w.number, value: w.bodyWeight })),
+    feelings: shown
+      .map((w) => ({ week: w.number, energia: average(w.days.map((d) => d.energy)), satisfaccion: average(w.days.map((d) => d.satisfaction)) }))
+      .filter((f) => f.energia != null || f.satisfaccion != null),
     sessions: shown.map((w) => {
       const v = sessionsDone(w);
       return { week: w.number, value: v, tone: v >= target ? 'ok' : 'warn' };

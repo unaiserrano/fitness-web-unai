@@ -70,6 +70,31 @@ export default async function ProgressPage({ params, searchParams }: { params: P
           />
           <LineChart data={v.bodyWeight.map((p) => ({ week: p.week, peso: p.value }))} series={[{ key: 'peso', label: 'Peso', color: 'var(--brand)' }]} height={150} format="kg" label="Peso corporal por semana" />
         </Card>
+        {v.feelings.length ? (
+          <Card>
+            <CardHeader
+              as="h3"
+              title="Energía y satisfacción"
+              subtitle="Media de las sesiones, de 1 a 5"
+              action={
+                <div className="flex gap-3 text-xs font-semibold">
+                  <span className="inline-flex items-center gap-1.5"><span className="size-2.5 rounded-full bg-brand" />Energía</span>
+                  <span className="inline-flex items-center gap-1.5"><span className="size-2.5 rounded-full bg-info" />Satisfacción</span>
+                </div>
+              }
+            />
+            <LineChart
+              data={v.feelings}
+              series={[
+                { key: 'energia', label: 'Energía', color: 'var(--brand)' },
+                { key: 'satisfaccion', label: 'Satisfacción', color: 'var(--info)' },
+              ]}
+              height={150}
+              format="dec1"
+              label="Energía y satisfacción medias por semana"
+            />
+          </Card>
+        ) : null}
       </div>
 
       {v.stagnant.length ? (

@@ -14,3 +14,5 @@ export * from './notes/parse';
 export * from './notes/merge';
 export * from './notes/coach-notes';
 export * from './legacy';
+export * from './journal';
+export * from './diet';

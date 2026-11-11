@@ -29,14 +29,16 @@ export const rirColor = (v: number | null | undefined): string =>
   v == null ? 'var(--rir-na)' : v <= 0 ? 'var(--rir0)' : v <= 1 ? 'var(--rir1)' : v <= 2 ? 'var(--rir2)' : 'var(--rir3)';
 export const rirInk = (v: number | null | undefined): string => (v != null && v > 1 && v <= 2 ? '#2b2200' : '#ffffff');
 
-export const TONE_COLOR = { ok: 'var(--ok)', warn: 'var(--warn)', bad: 'var(--bad)', brand: 'var(--brand)', muted: 'var(--rir-na)' } as const;
+export const TONE_COLOR = { ok: 'var(--ok)', warn: 'var(--warn)', bad: 'var(--bad)', brand: 'var(--brand)', info: 'var(--info)', muted: 'var(--rir-na)' } as const;
 export type ChartTone = keyof typeof TONE_COLOR;
 
 /** Formatos de número que se pueden pasar desde el servidor (no se pueden pasar funciones). */
-export type ValueFormat = 'int' | 'kg' | 'pct' | 'signed-pct' | 'tonnes';
+export type ValueFormat = 'int' | 'kg' | 'pct' | 'signed-pct' | 'tonnes' | 'dec1';
 const es = (v: number, d = 1) => (Math.round(v * 10 ** d) / 10 ** d).toString().replace('.', ',');
 export const formatValue = (v: number, f: ValueFormat = 'int'): string => {
   switch (f) {
+    case 'dec1':
+      return es(v, 1);
     case 'kg':
       return `${es(v, 2)}`;
     case 'pct':

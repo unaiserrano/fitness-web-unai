@@ -11,6 +11,16 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = { title: 'Personas' };
 
+const AVATAR = ['from-brand to-warn', 'from-info to-ok', 'from-ok to-lime', 'from-bad to-brand', 'from-warn to-lime', 'from-info to-brand'];
+const initials = (name: string) =>
+  name
+    .replace(/\(.*?\)/g, '')
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase() ?? '')
+    .join('');
+
 export default async function HomePage() {
   const athletes = await loadAthletes();
   const cards = await Promise.all(
@@ -45,43 +55,67 @@ export default async function HomePage() {
           Crea una persona para empezar a montar su rutina.
         </EmptyState>
       ) : (
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {cards.map(({ a, plan, last, stagnant, deload }) => (
-            <li key={a.id}>
-              <Link
-                href={`/personas/${a.id}/progreso`}
-                className="group flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-surface p-5 transition-all hover:-translate-y-0.5 hover:border-ink/25 hover:shadow-[0_12px_32px_-18px_rgba(0,0,0,0.35)]"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <h2 className="truncate text-xl font-extrabold">{a.name}</h2>
-                    <p className="mt-1 line-clamp-2 text-sm text-muted">{a.subtitle || 'Sin descripción'}</p>
-                  </div>
-                  <span className="grid size-9 shrink-0 place-items-center rounded-full bg-surface-2 transition-colors group-hover:bg-lime group-hover:text-lime-ink">
-                    <ArrowRight aria-hidden className="size-4" />
-                  </span>
-                </div>
-                <dl className="mt-6 grid grid-cols-2 gap-3">
-                  <div>
-                    <dt className="text-xs font-semibold text-muted">Semana</dt>
-                    <dd className="tnum font-display text-2xl font-extrabold">{plan ?? last?.number ?? '—'}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-xs font-semibold text-muted">Entrenos última semana</dt>
-                    <dd className="tnum font-display text-2xl font-extrabold">
-                      {last ? `${last.sessions}/${a.targetSessions}` : '—'}
-                    </dd>
-                  </div>
-                </dl>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {plan ? <Badge tone="brand">Semana {plan} preparada</Badge> : <Badge>Sin semana preparada</Badge>}
-                  {deload ? <Badge tone="warn">Toca descarga</Badge> : null}
-                  {stagnant ? <Badge tone="warn">{stagnant} estancado{stagnant > 1 ? 's' : ''}</Badge> : null}
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <>
+          <section className="band-glow mb-6 grid grid-cols-2 gap-3 rounded-[28px] p-5 text-band-ink sm:grid-cols-4 sm:p-6">
+            {[
+              { label: 'Personas', value: cards.length },
+              { label: 'Semanas preparadas', value: cards.filter((c) => c.plan).length },
+              { label: 'Toca descarga', value: cards.filter((c) => c.deload).length },
+              { label: 'Ejercicios estancados', value: cards.reduce((t, c) => t + c.stagnant, 0) },
+            ].map((s, i) => (
+              <div key={s.label} className={i === 0 ? 'rounded-2xl bg-brand p-4 text-brand-ink' : 'rounded-2xl border border-white/10 bg-white/[0.06] p-4'}>
+                <p className="tnum font-display text-3xl font-black leading-none sm:text-4xl">{s.value}</p>
+                <p className="mt-1.5 text-xs font-semibold uppercase tracking-wider opacity-75">{s.label}</p>
+              </div>
+            ))}
+          </section>
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {cards.map(({ a, plan, last, stagnant, deload }, i) => {
+              const pct = last ? Math.min(100, Math.round((last.sessions / Math.max(1, a.targetSessions)) * 100)) : 0;
+              return (
+                <li key={a.id}>
+                  <Link
+                    href={`/personas/${a.id}/progreso`}
+                    className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-surface p-5 shadow-[0_10px_30px_-22px_rgba(0,0,0,0.3)] transition-all hover:-translate-y-1 hover:border-brand/40 hover:shadow-[0_22px_40px_-24px_var(--brand)]"
+                  >
+                    <span aria-hidden className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${AVATAR[i % AVATAR.length]}`} />
+                    <div className="flex items-start gap-3">
+                      <span aria-hidden className={`grid size-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br font-display text-lg font-black text-white shadow-sm ${AVATAR[i % AVATAR.length]}`}>
+                        {initials(a.name)}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <h2 className="truncate text-xl font-extrabold">{a.name}</h2>
+                        <p className="mt-0.5 line-clamp-2 text-sm text-muted">{a.subtitle || 'Sin descripción'}</p>
+                      </div>
+                      <span className="grid size-9 shrink-0 place-items-center rounded-full bg-surface-2 transition-colors group-hover:bg-brand group-hover:text-brand-ink">
+                        <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-0.5" />
+                      </span>
+                    </div>
+                    <dl className="mt-5 grid grid-cols-2 gap-3">
+                      <div>
+                        <dt className="text-xs font-semibold text-muted">Semana</dt>
+                        <dd className="tnum font-display text-3xl font-extrabold">{plan ?? last?.number ?? '—'}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-xs font-semibold text-muted">Entrenos última semana</dt>
+                        <dd className="tnum font-display text-3xl font-extrabold">{last ? `${last.sessions}/${a.targetSessions}` : '—'}</dd>
+                      </div>
+                    </dl>
+                    <div className="mt-3 h-2 overflow-hidden rounded-full bg-surface-2" role="presentation">
+                      <div className={`h-full rounded-full ${pct >= 100 ? 'bg-ok' : 'bg-gradient-to-r from-brand to-warn'}`} style={{ width: `${pct}%` }} />
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {plan ? <Badge tone="brand">Semana {plan} preparada</Badge> : <Badge>Sin semana preparada</Badge>}
+                      {deload ? <Badge tone="warn">Toca descarga</Badge> : null}
+                      {stagnant ? <Badge tone="warn">{stagnant} estancado{stagnant > 1 ? 's' : ''}</Badge> : null}
+                      {!deload && !stagnant && last ? <Badge tone="lime">Todo en marcha</Badge> : null}
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </>
       )}
     </>
   );
