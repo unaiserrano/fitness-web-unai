@@ -1,0 +1,23 @@
+# dependencias
+node_modules/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# entorno
+.env
+.env*.local
+
+# base de datos local (PGlite)
+.data/
+
+# datos reales exportados de la app anterior (llevan datos de clientes)
+data/*.json
+
+# varios
+.DS_Store
+.vercel
+coverage/

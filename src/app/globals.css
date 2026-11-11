@@ -1,0 +1,137 @@
+@import 'tailwindcss';
+
+/* Modo oscuro por atributo: <html data-theme="dark">. Lo pone el selector de tema (claro / oscuro / sistema). */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/*
+ * Paleta: fondo cálido casi blanco, tinta casi negra, azul "pista" como color principal
+ * y un verde lima solo para destacar lo bueno (progreso, objetivos cumplidos).
+ */
+:root {
+  --bg: #f5f6f2;
+  --surface: #ffffff;
+  --surface-2: #eef0eb;
+  --ink: #15171b;
+  --muted: #5d626a;
+  --line: #e2e4de;
+  --brand: #2f49d1;
+  --brand-ink: #ffffff;
+  --brand-soft: #e7ebfc;
+  --lime: #c6ef4e;
+  --lime-ink: #1d2a04;
+  --ok: #1e8556;
+  --ok-soft: #e3f4ea;
+  --warn: #b26f07;
+  --warn-soft: #fbf0dc;
+  --bad: #cc3446;
+  --bad-soft: #fbe6e9;
+  --rir0: #cc3446;
+  --rir1: #e47c35;
+  --rir2: #e5bd36;
+  --rir3: #2b9a66;
+  --rir-na: #c9ccd2;
+  --focus: #2f49d1;
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #0e1013;
+  --surface: #16191e;
+  --surface-2: #1d2127;
+  --ink: #eceef1;
+  --muted: #9aa0a9;
+  --line: #2a2f37;
+  --brand: #8fa2ff;
+  --brand-ink: #0e1013;
+  --brand-soft: #1e2546;
+  --lime: #c6ef4e;
+  --lime-ink: #1d2a04;
+  --ok: #4cc58b;
+  --ok-soft: #12291e;
+  --warn: #f0b34a;
+  --warn-soft: #2d2412;
+  --bad: #ff7584;
+  --bad-soft: #321a1e;
+  --rir-na: #4a505a;
+  --focus: #8fa2ff;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-lime: var(--lime);
+  --color-lime-ink: var(--lime-ink);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Plus Jakarta Sans Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --radius-card: 1.25rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  :focus-visible {
+    outline: 2.5px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+  ::selection {
+    background: var(--lime);
+    color: var(--lime-ink);
+  }
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+  .field {
+    @apply w-full rounded-xl border border-line bg-surface px-3 py-2.5 text-[15px] text-ink placeholder:text-muted/70 transition-colors;
+    @apply hover:border-muted/50 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25;
+  }
+  .field-sm {
+    @apply px-2.5 py-1.5 text-sm;
+  }
+}
