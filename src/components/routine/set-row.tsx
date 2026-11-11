@@ -41,7 +41,7 @@ export function SetRow({
 
   const input = 'field field-sm tnum text-center';
   return (
-    <li className="rounded-2xl bg-surface-2/60 px-3 py-2.5">
+    <li className="rounded-md bg-surface-2/60 px-3 py-2.5">
       <div className="grid grid-cols-[2rem_1fr_1fr_4.25rem_2rem] items-center gap-2">
         <span className="text-xs font-bold text-brand">S{set.n}</span>
         <input
@@ -68,7 +68,7 @@ export function SetRow({
         />
         <button
           type="button"
-          className="grid size-8 place-items-center rounded-full text-muted hover:bg-bad-soft hover:text-bad"
+          className="grid size-8 place-items-center rounded-md text-muted hover:bg-bad-soft hover:text-bad"
           aria-label={`Quitar la serie ${set.n}`}
           onClick={() => mutate((w) => void w.days[di].exercises[ei].sets.splice(si, 1))}
         >
@@ -83,7 +83,7 @@ export function SetRow({
               onClick={() => rec && setWhy((v) => !v)}
               aria-expanded={rec ? why : undefined}
               title={rec?.reason ?? 'Lo que hizo la última vez'}
-              className="tnum inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-2 py-0.5 text-muted"
+              className="tnum inline-flex items-center gap-1.5 rounded-md border border-line bg-surface px-2 py-0.5 text-muted"
             >
               {last.week !== weekNumber - 1 ? <span className="font-semibold text-ink">S{last.week}</span> : null}
               {dist ? r.repsText : `${r.reps} reps`}
@@ -95,9 +95,9 @@ export function SetRow({
               ) : null}
             </button>
             {dd != null && (dd >= 3 || dd <= -2) ? (
-              <span className={cn('rounded-full px-2 py-0.5 font-semibold', dd > 0 ? 'bg-ink text-bg' : 'border border-ink')}>{`${dd > 0 ? '+' : '−'}${Math.abs(dd)} reps`}</span>
+              <span className={cn('rounded-sm px-2 py-0.5 font-semibold', dd > 0 ? 'bg-ink text-bg' : 'border border-ink')}>{`${dd > 0 ? '+' : '−'}${Math.abs(dd)} reps`}</span>
             ) : null}
-            {dk ? <span className={cn('rounded-full px-2 py-0.5 font-semibold', dk > 0 ? 'bg-ink text-bg' : 'border border-ink')}>{`${dk > 0 ? '+' : '−'}${formatNum(Math.abs(dk))} kg`}</span> : null}
+            {dk ? <span className={cn('rounded-sm px-2 py-0.5 font-semibold', dk > 0 ? 'bg-ink text-bg' : 'border border-ink')}>{`${dk > 0 ? '+' : '−'}${formatNum(Math.abs(dk))} kg`}</span> : null}
             {dd != null && !(dd >= 3 || dd <= -2) && !dk ? <span className="font-semibold text-ok">bien</span> : null}
             {rec && !rec.same ? (
               <button

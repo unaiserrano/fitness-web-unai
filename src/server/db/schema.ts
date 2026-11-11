@@ -1,5 +1,5 @@
 import { boolean, integer, jsonb, pgTable, primaryKey, real, text, timestamp } from 'drizzle-orm/pg-core';
-import type { AthleteConfig, Week } from '@/domain/types';
+import type { AthleteConfig, AthleteSummary, Week } from '@/domain/types';
 
 const timestamps = {
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
@@ -16,6 +16,8 @@ export const athletes = pgTable('athletes', {
   flexibleDays: boolean('flexible_days').notNull().default(false),
   config: jsonb('config').$type<AthleteConfig>().notNull(),
   sortOrder: integer('sort_order').notNull().default(0),
+  /** Caché del resumen de la home; se pone a null al cambiar algo y se recalcula al verlo. */
+  summary: jsonb('summary').$type<AthleteSummary | null>(),
   ...timestamps,
 });
 
@@ -70,4 +72,22 @@ export const diets = pgTable('diets', {
     .references(() => athletes.id, { onDelete: 'cascade' }),
   content: jsonb('content').$type<Record<string, unknown>>().notNull(),
   ...timestamps,
+});
+
+/** Versiones anteriores de cada semana (se guarda la que se sobrescribe). */
+export const weekRevisions = pgTable('week_revisions', {
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+  athleteId: text('athlete_id')
+    .notNull()
+    .references(() => athletes.id, { onDelete: 'cascade' }),
+  number: integer('number').notNull(),
+  content: jsonb('content').$type<Week>().notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+/** Intentos fallidos de entrada por IP, para frenar la fuerza bruta. */
+export const loginAttempts = pgTable('login_attempts', {
+  key: text('key').primaryKey(),
+  count: integer('count').notNull().default(0),
+  windowStart: timestamp('window_start', { withTimezone: true }).notNull().defaultNow(),
 });

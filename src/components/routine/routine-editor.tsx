@@ -110,10 +110,11 @@ export function RoutineEditor(props: RoutineEditorProps) {
   const save = () =>
     start(async () => {
       if (!draft) return;
-      const res = await saveWeekAction(athlete.id, draft, libEdits);
+      const expected = exists ? (saved?.savedAt ?? '') : null;
+      const res = await saveWeekAction(athlete.id, draft, libEdits, expected);
       show(res.message, res.ok ? 'ok' : 'bad');
       if (res.ok) {
-        markSaved(draft);
+        markSaved({ ...draft, savedAt: res.savedAt ?? draft.savedAt });
         setLibEdits({});
         setExists(true);
         router.replace(`?semana=${draft.number}`, { scroll: false });
@@ -312,7 +313,7 @@ export function RoutineEditor(props: RoutineEditorProps) {
       {/* Barra fija para guardar (encima de la barra de pestañas en el móvil) */}
       <div className="pointer-events-none fixed inset-x-0 bottom-[calc(4.25rem+env(safe-area-inset-bottom))] z-40 flex justify-center px-4 sm:bottom-6">
         <div
-          className={`pointer-events-auto flex items-center gap-2 rounded-full border border-line bg-surface/95 py-1.5 pl-5 pr-1.5 shadow-[0_18px_40px_-20px_rgba(0,0,0,0.45)] backdrop-blur transition-all ${anyDirty || !exists ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'}`}
+          className={`pointer-events-auto flex items-center gap-2 rounded-md border border-ink bg-surface py-1.5 pl-5 pr-1.5 transition-all ${anyDirty || !exists ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'}`}
         >
           <span className="text-sm font-semibold">{exists ? 'Cambios sin guardar' : `Semana ${draft.number} sin guardar`}</span>
           <Button

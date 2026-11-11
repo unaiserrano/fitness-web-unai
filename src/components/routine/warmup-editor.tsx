@@ -29,14 +29,14 @@ export function WarmupEditor({ day, di }: { day: Day; di: number }) {
               <div className="col-start-3 row-start-1 flex sm:col-start-5">
                 <button
                   type="button"
-                  className="hidden size-8 place-items-center rounded-full text-muted hover:bg-surface-2 disabled:opacity-30 sm:grid"
+                  className="hidden size-8 place-items-center rounded-md text-muted hover:bg-surface-2 disabled:opacity-30 sm:grid"
                   aria-label="Subir"
                   disabled={i === 0}
                   onClick={() => upd((d) => void d.warmup.splice(i - 1, 0, d.warmup.splice(i, 1)[0]))}
                 >
                   <ArrowUp aria-hidden className="size-4" />
                 </button>
-                <button type="button" className="grid size-8 place-items-center rounded-full text-muted hover:bg-bad-soft hover:text-bad" aria-label="Quitar" onClick={() => upd((d) => void d.warmup.splice(i, 1))}>
+                <button type="button" className="grid size-8 place-items-center rounded-md text-muted hover:bg-bad-soft hover:text-bad" aria-label="Quitar" onClick={() => upd((d) => void d.warmup.splice(i, 1))}>
                   <X aria-hidden className="size-4" />
                 </button>
               </div>
@@ -54,7 +54,7 @@ export function WarmupEditor({ day, di }: { day: Day; di: number }) {
         </ol>
         <button
           type="button"
-          className="inline-flex items-center gap-1.5 self-start rounded-full px-3 py-1.5 text-sm font-semibold text-muted hover:bg-surface-2 hover:text-ink"
+          className="inline-flex items-center gap-1.5 self-start rounded-sm px-3 py-1.5 text-sm font-semibold text-muted hover:bg-surface-2 hover:text-ink"
           onClick={() => upd((d) => void d.warmup.push({ name: '', dose: '', videoUrl: '' }))}
         >
           <Plus aria-hidden className="size-4" /> Ejercicio de calentamiento

@@ -13,10 +13,17 @@ export const authConfigured = (): boolean => !!process.env.APP_PASSWORD;
 /** En producción (Vercel) la contraseña es obligatoria; en local se puede trabajar sin ella. */
 export const authRequired = (): boolean => authConfigured() || !!process.env.VERCEL;
 
+/** En producción AUTH_SECRET es obligatorio y largo: si no, la sesión se podría falsificar. */
+export const secretConfigured = (): boolean => {
+  const prod = process.env.NODE_ENV === 'production' || !!process.env.VERCEL;
+  const s = process.env.AUTH_SECRET;
+  if (s) return !prod || s.length >= 32;
+  return !prod && !!process.env.APP_PASSWORD;
+};
+
 const secret = () => {
-  const s = process.env.AUTH_SECRET || process.env.APP_PASSWORD;
-  if (!s) throw new Error('Falta AUTH_SECRET');
-  return new TextEncoder().encode(s);
+  if (!secretConfigured()) throw new Error('Falta AUTH_SECRET (mínimo 32 caracteres).');
+  return new TextEncoder().encode(process.env.AUTH_SECRET || process.env.APP_PASSWORD);
 };
 
 export async function createSessionToken(): Promise<string> {
@@ -28,7 +35,7 @@ export async function createSessionToken(): Promise<string> {
 }
 
 export async function isValidSession(token: string | undefined): Promise<boolean> {
-  if (!token || !authConfigured()) return false;
+  if (!token || !authConfigured() || !secretConfigured()) return false;
   try {
     await jwtVerify(token, secret(), { algorithms: ['HS256'] });
     return true;

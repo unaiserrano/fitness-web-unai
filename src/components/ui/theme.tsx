@@ -49,7 +49,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   };
 
   return (
-    <div role="radiogroup" aria-label="Tema" className={cn('inline-flex rounded-full border border-line bg-surface p-0.5', className)}>
+    <div role="radiogroup" aria-label="Tema" className={cn('inline-flex rounded-md border border-line p-0.5', className)}>
       {OPTIONS.map(([c, label, Icon]) => (
         <button
           key={c}
@@ -59,7 +59,7 @@ export function ThemeToggle({ className }: { className?: string }) {
           title={label}
           onClick={() => pick(c)}
           className={cn(
-            'grid size-8 place-items-center rounded-full transition-colors',
+            'grid size-7 place-items-center rounded transition-colors',
             choice === c ? 'bg-ink text-bg' : 'text-muted hover:text-ink',
           )}
         >

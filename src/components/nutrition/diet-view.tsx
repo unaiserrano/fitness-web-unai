@@ -7,7 +7,6 @@ import { slugify } from '@/domain/text';
 import { Button, Card, EmptyState } from '@/components/ui/primitives';
 import { DietEditor } from './diet-editor';
 
-const MEAL_COLORS = ['from-brand/20', 'from-lime/50', 'from-info/20', 'from-warn/20', 'from-ok/20', 'from-bad/15'];
 
 export function DietView({ athleteId, athleteName, diet, foods }: { athleteId: string; athleteName: string; diet: Diet | null; foods: Food[] }) {
   const [editing, setEditing] = useState(false);
@@ -30,7 +29,7 @@ export function DietView({ athleteId, athleteName, diet, foods }: { athleteId: s
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0">
-          <h2 className="text-2xl font-extrabold">{diet.title || 'Alimentación'}</h2>
+          <h2 className="text-2xl font-semibold">{diet.title || 'Alimentación'}</h2>
           <p className="mt-1 max-w-2xl text-[15px] text-muted">
             {diet.intro}
             {diet.target ? (
@@ -56,10 +55,10 @@ export function DietView({ athleteId, athleteName, diet, foods }: { athleteId: s
           <a
             key={m.name + i}
             href={`#com-${slugify(m.name)}`}
-            className={`group rounded-[var(--radius-card)] border border-line bg-gradient-to-br ${MEAL_COLORS[i % MEAL_COLORS.length]} to-surface p-4 transition-transform hover:-translate-y-0.5`}
+            className={`group rounded-[var(--radius-card)] border border-line bg-surface p-4`}
           >
             <p className="text-xs font-bold uppercase tracking-wider text-muted">{m.name}</p>
-            <p className="tnum mt-1 font-display text-2xl font-extrabold">{m.kcal || '—'}</p>
+            <p className="tnum mt-1 font-display text-2xl font-semibold">{m.kcal || '—'}</p>
             <p className="text-xs text-muted">{m.options.length} opciones</p>
           </a>
         ))}
@@ -68,7 +67,7 @@ export function DietView({ athleteId, athleteName, diet, foods }: { athleteId: s
       {diet.meals.map((m, mi) => (
         <section key={m.name + mi} id={`com-${slugify(m.name)}`} className="flex scroll-mt-24 flex-col gap-3">
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b-2 border-ink pb-2">
-            <h3 className="text-xl font-extrabold">{m.name}</h3>
+            <h3 className="text-xl font-semibold">{m.name}</h3>
             <span className="text-sm text-muted">{[m.kcal ? `objetivo ${m.kcal}` : '', mealRangeLabel(m, foods)].filter(Boolean).join(' · ')}</span>
           </div>
           <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -77,7 +76,7 @@ export function DietView({ athleteId, athleteName, diet, foods }: { athleteId: s
               return (
                 <Card key={oi} className="flex flex-col gap-3 p-5 break-inside-avoid">
                   <div className="flex items-baseline gap-3">
-                    <span className="font-display text-2xl font-extrabold text-brand">{oi + 1}</span>
+                    <span className="font-display text-2xl font-semibold text-brand">{oi + 1}</span>
                     <h4 className="font-display text-base font-bold">{o.title || 'Opción'}</h4>
                   </div>
                   <table className="w-full text-sm">
@@ -103,7 +102,7 @@ export function DietView({ athleteId, athleteName, diet, foods }: { athleteId: s
                     </tbody>
                   </table>
                   {r.hi.kcal > 0 ? (
-                    <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl bg-surface-2 px-3 py-2 text-sm">
+                    <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md bg-surface-2 px-3 py-2 text-sm">
                       <span className="inline-flex items-center gap-1 font-bold">
                         <Flame aria-hidden className="size-4 text-brand" />≈ {kcalLabel(r)}
                       </span>

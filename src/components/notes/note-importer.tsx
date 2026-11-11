@@ -106,7 +106,7 @@ export function NoteImporter({
               </ul>
             </Notice>
           ) : null}
-          <div className="overflow-x-auto rounded-2xl border border-line">
+          <div className="overflow-x-auto rounded-md border border-line">
             <table className="w-full min-w-[34rem] text-sm">
               <thead className="bg-surface-2 text-left text-xs uppercase tracking-wider text-muted">
                 <tr>

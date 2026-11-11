@@ -13,7 +13,7 @@ import { renumberSets } from '@/domain/week';
 import { assertAuthorized } from '../auth/guard';
 import { getAthlete } from '../repositories/athletes';
 import { listLibrary, saveLibraryItems } from '../repositories/library';
-import { deleteWeek, getWeek, listWeeks, saveWeek } from '../repositories/weeks';
+import { WeekConflictError, deleteWeek, getWeek, listRevisions, listWeeks, saveWeek } from '../repositories/weeks';
 
 export interface ActionResult {
   ok: boolean;
@@ -22,23 +22,30 @@ export interface ActionResult {
 
 const libEditsSchema = z.record(z.string(), z.object({ muscleGroup: z.string().max(40).optional(), weightStep: z.number().positive().max(50).optional() }));
 
-const fail = (e: unknown): ActionResult => ({
-  ok: false,
-  message: e instanceof z.ZodError ? `Revisa los datos: ${e.issues[0]?.message ?? 'formato no válido'}` : e instanceof Error ? e.message : 'No se pudo guardar.',
-});
+const fail = (e: unknown): ActionResult => {
+  if (e instanceof z.ZodError) return { ok: false, message: `Revisa los datos: ${e.issues[0]?.message ?? 'formato no válido'}` };
+  if (e instanceof WeekConflictError || (e instanceof Error && e.message === 'No autorizado')) return { ok: false, message: e.message };
+  console.error('[acción]', e);
+  return { ok: false, message: 'No se pudo guardar. Inténtalo de nuevo en unos segundos.' };
+};
 
 /**
  * Guarda una semana. De paso actualiza la biblioteca con el vídeo, la ejecución,
  * el grupo muscular y el salto de peso de cada ejercicio (como hacía la app anterior).
  */
-export async function saveWeekAction(athleteId: string, rawWeek: unknown, rawLibEdits: unknown = {}): Promise<ActionResult> {
+export async function saveWeekAction(
+  athleteId: string,
+  rawWeek: unknown,
+  rawLibEdits: unknown = {},
+  expectedSavedAt?: string | null,
+): Promise<ActionResult & { savedAt?: string }> {
   try {
     await assertAuthorized();
     if (!(await getAthlete(athleteId))) return { ok: false, message: 'Esa persona no existe.' };
     const week = renumberSets(weekSchema.parse(rawWeek) as Week);
     const edits = libEditsSchema.parse(rawLibEdits);
     week.savedAt = new Date().toISOString();
-    await saveWeek(athleteId, week);
+    await saveWeek(athleteId, week, { expectedSavedAt });
 
     const lib = toLibrary(await listLibrary());
     const writes = new Map<string, LibraryExercise>();
@@ -58,7 +65,7 @@ export async function saveWeekAction(athleteId: string, rawWeek: unknown, rawLib
     await saveLibraryItems([...writes.values()]);
     revalidatePath(`/personas/${athleteId}`, 'layout');
     revalidatePath('/');
-    return { ok: true, message: `Semana ${week.number} guardada.` };
+    return { ok: true, message: `Semana ${week.number} guardada.`, savedAt: week.savedAt };
   } catch (e) {
     return fail(e);
   }
@@ -96,4 +103,11 @@ export async function importNoteAction(athleteId: string, number: number, text: 
   } catch (e) {
     return fail(e);
   }
+}
+
+/** Versiones anteriores de una semana, para poder volver atrás. */
+export async function listRevisionsAction(athleteId: string, number: number) {
+  await assertAuthorized();
+  const revs = await listRevisions(athleteId, z.number().int().min(1).parse(number));
+  return revs.map((r) => ({ id: r.id, createdAt: r.createdAt, week: r.content }));
 }

@@ -8,60 +8,64 @@
  * (el de la app original), lima para lo bueno (récords, objetivos) y azul para la información.
  */
 :root {
-  --bg: #f6f4f0;
-  --surface: #ffffff;
-  --surface-2: #f0ede7;
-  --ink: #15171b;
-  --muted: #5d626a;
-  --line: #e6e1d9;
-  --brand: #f0541a;
-  --brand-ink: #ffffff;
-  --brand-soft: #ffe8dd;
-  --band: #141312;
-  --band-ink: #f7f5f1;
-  --info: #2f6fb0;
-  --info-soft: #e2edf8;
-  --lime: #c6ef4e;
-  --lime-ink: #1d2a04;
-  --ok: #1e8556;
-  --ok-soft: #e3f4ea;
-  --warn: #b26f07;
-  --warn-soft: #fbf0dc;
-  --bad: #cc3446;
-  --bad-soft: #fbe6e9;
-  --rir0: #cc3446;
-  --rir1: #e47c35;
-  --rir2: #e5bd36;
-  --rir3: #2b9a66;
-  --rir-na: #c9ccd2;
-  --focus: #f0541a;
+  --bg: #f4f1ea;
+  --surface: #fbfaf6;
+  --surface-2: #ebe7dd;
+  --ink: #16140f;
+  --muted: #5f5a4e;
+  --line: #d9d3c4;
+  --brand: #d9480f;
+  --brand-ink: #fffaf5;
+  --brand-soft: #f6e0d3;
+  --band: #16140f;
+  --band-ink: #f4f1ea;
+  --info: #2c5f8a;
+  --info-soft: #dde7ef;
+  --lime: #dfe6b0;
+  --lime-ink: #2a3008;
+  --ok: #2f6b45;
+  --ok-soft: #dcebdf;
+  --warn: #8f5a0a;
+  --warn-soft: #f3e6c8;
+  --bad: #a8283a;
+  --bad-soft: #f4dadd;
+  --rir0: #a8283a;
+  --rir1: #cf6a22;
+  --rir2: #c9a227;
+  --rir3: #3f8a5c;
+  --rir-na: #c9c3b3;
+  --focus: #d9480f;
   color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-  --bg: #0e1013;
-  --surface: #16191e;
-  --surface-2: #1d2127;
-  --ink: #eceef1;
-  --muted: #9aa0a9;
-  --line: #2a2f37;
-  --brand: #ff6b33;
-  --brand-ink: #ffffff;
-  --brand-soft: #3a2116;
-  --band: #000000;
-  --band-ink: #f7f5f1;
-  --info: #6fa8e8;
-  --info-soft: #15243a;
-  --lime: #c6ef4e;
-  --lime-ink: #1d2a04;
-  --ok: #4cc58b;
-  --ok-soft: #12291e;
-  --warn: #f0b34a;
+  --bg: #12110e;
+  --surface: #1a1915;
+  --surface-2: #23211c;
+  --ink: #efebe1;
+  --muted: #a39d8e;
+  --line: #34312a;
+  --brand: #ff7a3d;
+  --brand-ink: #1a0d05;
+  --brand-soft: #3a2415;
+  --band: #0b0a08;
+  --band-ink: #efebe1;
+  --info: #7fb0da;
+  --info-soft: #17283a;
+  --lime: #cfd98a;
+  --lime-ink: #1f2506;
+  --ok: #6cc08a;
+  --ok-soft: #142a1d;
+  --warn: #e3b05a;
   --warn-soft: #2d2412;
-  --bad: #ff7584;
-  --bad-soft: #321a1e;
-  --rir-na: #4a505a;
-  --focus: #ff6b33;
+  --bad: #ff8593;
+  --bad-soft: #331b20;
+  --rir0: #ff8593;
+  --rir1: #f08a45;
+  --rir2: #e0c04a;
+  --rir3: #5fbf88;
+  --rir-na: #4a463c;
+  --focus: #ff7a3d;
   color-scheme: dark;
 }
 
@@ -87,9 +91,10 @@
   --color-warn-soft: var(--warn-soft);
   --color-bad: var(--bad);
   --color-bad-soft: var(--bad-soft);
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Plus Jakarta Sans Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
-  --radius-card: 1.25rem;
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, SFMono-Regular, monospace;
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --radius-card: 0.75rem;
 }
 
 @layer base {
@@ -98,26 +103,23 @@
     text-rendering: optimizeLegibility;
   }
   body {
-    background:
-      radial-gradient(900px 420px at 100% -10%, color-mix(in srgb, var(--brand) 9%, transparent), transparent 70%),
-      radial-gradient(700px 380px at -10% 30%, color-mix(in srgb, var(--lime) 14%, transparent), transparent 70%),
-      var(--bg);
-    background-attachment: fixed;
+    background: var(--bg);
     color: var(--ink);
     font-family: var(--font-sans);
-    font-feature-settings: 'cv11', 'ss01';
     -webkit-font-smoothing: antialiased;
   }
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    letter-spacing: -0.015em;
   }
   :focus-visible {
     outline: 2.5px solid var(--focus);
     outline-offset: 2px;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
   }
   ::selection {
     background: var(--lime);
@@ -143,8 +145,25 @@
   .tnum {
     font-variant-numeric: tabular-nums;
   }
+  /* Cifras grandes: serif con números tabulares, como un marcador. */
+  .figure {
+    font-family: var(--font-display);
+    font-variant-numeric: tabular-nums lining-nums;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  /* Etiqueta pequeña tipo anotación de cuaderno. */
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
   .field {
-    @apply w-full rounded-xl border border-line bg-surface px-3 py-2.5 text-[15px] text-ink placeholder:text-muted/70 transition-colors;
+    @apply w-full rounded-md border border-line bg-surface px-3 py-2.5 text-[15px] text-ink placeholder:text-muted/70 transition-colors;
     @apply hover:border-muted/50 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25;
   }
   .field-sm {
@@ -161,12 +180,9 @@
   .rise > *:nth-child(3) { animation-delay: 80ms; }
   .rise > *:nth-child(4) { animation-delay: 120ms; }
   .rise > *:nth-child(n + 5) { animation-delay: 160ms; }
-  /* Brillo naranja de la banda. */
+  /* Cabecera oscura sin adornos: solo tinta. */
   .band-glow {
-    background:
-      radial-gradient(520px 260px at 92% 0%, color-mix(in srgb, var(--brand) 55%, transparent), transparent 70%),
-      radial-gradient(380px 220px at 0% 120%, color-mix(in srgb, var(--lime) 22%, transparent), transparent 70%),
-      var(--band);
+    background: var(--band);
   }
 }
 

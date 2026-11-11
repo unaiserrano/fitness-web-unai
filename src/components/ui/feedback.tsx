@@ -26,7 +26,7 @@ export function ToastView({ toast }: { toast: Toast }) {
       {toast ? (
         <p
           className={cn(
-            'pointer-events-auto rounded-full px-5 py-2.5 text-sm font-semibold shadow-lg',
+            'pointer-events-auto rounded-sm px-5 py-2.5 text-sm font-semibold shadow-lg',
             toast.tone === 'ok' && 'bg-ink text-bg',
             toast.tone === 'bad' && 'bg-bad text-white',
             toast.tone === 'neutral' && 'bg-surface text-ink ring-1 ring-line',

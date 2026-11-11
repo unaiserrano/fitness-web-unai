@@ -27,7 +27,7 @@ export function WeekSelect({
   return (
     <label className="inline-flex items-center gap-2 text-sm">
       <span className="font-semibold text-muted">{label}</span>
-      <select className="field field-sm w-auto rounded-full" value={value ?? ''} onChange={(e) => onChange(e.target.value)}>
+      <select className="field field-sm w-auto" value={value ?? ''} onChange={(e) => onChange(e.target.value)}>
         {extra ? <option value={extra.value}>{extra.label}</option> : null}
         {[...weeks].reverse().map((w) => (
           <option key={w.number} value={w.number}>

@@ -41,7 +41,7 @@ export function DietEditor({ athleteId, initial, foods, onClose }: { athleteId: 
         ))}
       </datalist>
       <div>
-        <h2 className="text-2xl font-extrabold">Editar la alimentación</h2>
+        <h2 className="text-2xl font-semibold">Editar la alimentación</h2>
         <p className="mt-1 max-w-3xl text-[15px] text-muted">
           Cambia comidas, opciones, alimentos y cantidades. Las calorías se recalculan solas con los datos de Alimentos. Si un alimento es alternativa al anterior (patata o batata), pulsa la «o» de su
           izquierda y se cuenta solo uno.
@@ -83,7 +83,7 @@ export function DietEditor({ athleteId, initial, foods, onClose }: { athleteId: 
               return (
                 <Card key={oi} className="flex flex-col gap-2 p-4">
                   <div className="flex items-center gap-2">
-                    <span className="w-7 font-display text-xl font-extrabold text-brand">{oi + 1}</span>
+                    <span className="w-7 font-display text-xl font-semibold text-brand">{oi + 1}</span>
                     <input
                       className="field font-bold"
                       aria-label="Nombre de la opción"
@@ -144,7 +144,7 @@ export function DietEditor({ athleteId, initial, foods, onClose }: { athleteId: 
                     );
                   })}
                   {r.hi.kcal > 0 ? (
-                    <p className="rounded-xl bg-surface-2 px-3 py-1.5 text-sm">
+                    <p className="rounded-md bg-surface-2 px-3 py-1.5 text-sm">
                       <b>≈ {kcalLabel(r)}</b> <span className="text-xs text-muted">{macrosLabel(r)}</span>
                     </p>
                   ) : null}
