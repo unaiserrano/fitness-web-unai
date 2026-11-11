@@ -9,7 +9,7 @@ type Size = 'sm' | 'md';
 const base =
   'inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors disabled:pointer-events-none disabled:opacity-45 select-none whitespace-nowrap';
 const variants: Record<Variant, string> = {
-  primary: 'bg-ink text-bg hover:bg-ink/85',
+  primary: 'bg-brand text-brand-ink shadow-[0_8px_20px_-10px_var(--brand)] hover:brightness-105 active:translate-y-px',
   secondary: 'border border-line bg-surface text-ink hover:border-ink/30 hover:bg-surface-2',
   ghost: 'text-ink hover:bg-surface-2',
   danger: 'text-bad hover:bg-bad-soft',
@@ -40,7 +40,7 @@ export function ButtonLink({
 
 /* ---------- Tarjeta ---------- */
 export function Card({ className, ...rest }: ComponentProps<'section'>) {
-  return <section className={cn('min-w-0 rounded-[var(--radius-card)] border border-line bg-surface p-5 sm:p-6', className)} {...rest} />;
+  return <section className={cn('min-w-0 rounded-[var(--radius-card)] border border-line bg-surface p-5 shadow-[0_1px_0_rgba(0,0,0,0.02),0_10px_30px_-22px_rgba(0,0,0,0.25)] sm:p-6', className)} {...rest} />;
 }
 
 export function CardHeader({ title, subtitle, action, as: H = 'h2' }: { title: ReactNode; subtitle?: ReactNode; action?: ReactNode; as?: 'h2' | 'h3' }) {
@@ -56,7 +56,7 @@ export function CardHeader({ title, subtitle, action, as: H = 'h2' }: { title: R
 }
 
 /* ---------- Etiquetas ---------- */
-type Tone = 'neutral' | 'ok' | 'warn' | 'bad' | 'brand' | 'lime';
+type Tone = 'neutral' | 'ok' | 'warn' | 'bad' | 'brand' | 'lime' | 'info';
 const tones: Record<Tone, string> = {
   neutral: 'bg-surface-2 text-muted',
   ok: 'bg-ok-soft text-ok',
@@ -64,6 +64,7 @@ const tones: Record<Tone, string> = {
   bad: 'bg-bad-soft text-bad',
   brand: 'bg-brand-soft text-brand',
   lime: 'bg-lime text-lime-ink',
+  info: 'bg-info-soft text-info',
 };
 export function Badge({ tone = 'neutral', className, ...rest }: ComponentProps<'span'> & { tone?: Tone }) {
   return <span className={cn('tnum inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold', tones[tone], className)} {...rest} />;
@@ -89,6 +90,7 @@ export function Notice({ tone = 'neutral', title, children, className }: { tone?
     bad: 'bg-bad-soft border-bad/25',
     brand: 'bg-brand-soft border-brand/25',
     lime: 'bg-lime/40 border-lime',
+    info: 'bg-info-soft border-info/25',
   };
   return (
     <div role="note" className={cn('rounded-2xl border px-4 py-3 text-sm leading-relaxed', bg[tone], className)}>
@@ -113,7 +115,8 @@ export function PageTitle({ title, subtitle, action }: { title: ReactNode; subti
   return (
     <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
       <div className="min-w-0">
-        <h1 className="text-2xl font-extrabold sm:text-3xl">{title}</h1>
+        <h1 className="text-3xl font-extrabold sm:text-4xl">{title}</h1>
+        <span aria-hidden className="mt-2 block h-1 w-12 rounded-full bg-gradient-to-r from-brand to-lime" />
         {subtitle ? <p className="mt-1.5 max-w-2xl text-[15px] text-muted">{subtitle}</p> : null}
       </div>
       {action}
@@ -133,7 +136,7 @@ export function SegmentedLinks({ label, items, active }: { label: string; items:
           aria-current={it.value === active ? 'true' : undefined}
           className={cn(
             'whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] font-semibold transition-colors sm:px-3.5 sm:text-sm',
-            it.value === active ? 'bg-ink text-bg' : 'text-muted hover:text-ink',
+            it.value === active ? 'bg-brand text-brand-ink' : 'text-muted hover:text-ink',
           )}
         >
           {it.label}

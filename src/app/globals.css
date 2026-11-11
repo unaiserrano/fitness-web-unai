@@ -4,19 +4,23 @@
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
 /*
- * Paleta: fondo cálido casi blanco, tinta casi negra, azul "pista" como color principal
- * y un verde lima solo para destacar lo bueno (progreso, objetivos cumplidos).
+ * Paleta: fondo cálido, banda casi negra (como la portada del PDF), naranja como color principal
+ * (el de la app original), lima para lo bueno (récords, objetivos) y azul para la información.
  */
 :root {
-  --bg: #f5f6f2;
+  --bg: #f6f4f0;
   --surface: #ffffff;
-  --surface-2: #eef0eb;
+  --surface-2: #f0ede7;
   --ink: #15171b;
   --muted: #5d626a;
-  --line: #e2e4de;
-  --brand: #2f49d1;
+  --line: #e6e1d9;
+  --brand: #f0541a;
   --brand-ink: #ffffff;
-  --brand-soft: #e7ebfc;
+  --brand-soft: #ffe8dd;
+  --band: #141312;
+  --band-ink: #f7f5f1;
+  --info: #2f6fb0;
+  --info-soft: #e2edf8;
   --lime: #c6ef4e;
   --lime-ink: #1d2a04;
   --ok: #1e8556;
@@ -30,7 +34,7 @@
   --rir2: #e5bd36;
   --rir3: #2b9a66;
   --rir-na: #c9ccd2;
-  --focus: #2f49d1;
+  --focus: #f0541a;
   color-scheme: light;
 }
 
@@ -41,9 +45,13 @@
   --ink: #eceef1;
   --muted: #9aa0a9;
   --line: #2a2f37;
-  --brand: #8fa2ff;
-  --brand-ink: #0e1013;
-  --brand-soft: #1e2546;
+  --brand: #ff6b33;
+  --brand-ink: #ffffff;
+  --brand-soft: #3a2116;
+  --band: #000000;
+  --band-ink: #f7f5f1;
+  --info: #6fa8e8;
+  --info-soft: #15243a;
   --lime: #c6ef4e;
   --lime-ink: #1d2a04;
   --ok: #4cc58b;
@@ -53,7 +61,7 @@
   --bad: #ff7584;
   --bad-soft: #321a1e;
   --rir-na: #4a505a;
-  --focus: #8fa2ff;
+  --focus: #ff6b33;
   color-scheme: dark;
 }
 
@@ -67,6 +75,10 @@
   --color-brand: var(--brand);
   --color-brand-ink: var(--brand-ink);
   --color-brand-soft: var(--brand-soft);
+  --color-band: var(--band);
+  --color-band-ink: var(--band-ink);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
   --color-lime: var(--lime);
   --color-lime-ink: var(--lime-ink);
   --color-ok: var(--ok);
@@ -86,7 +98,11 @@
     text-rendering: optimizeLegibility;
   }
   body {
-    background: var(--bg);
+    background:
+      radial-gradient(900px 420px at 100% -10%, color-mix(in srgb, var(--brand) 9%, transparent), transparent 70%),
+      radial-gradient(700px 380px at -10% 30%, color-mix(in srgb, var(--lime) 14%, transparent), transparent 70%),
+      var(--bg);
+    background-attachment: fixed;
     color: var(--ink);
     font-family: var(--font-sans);
     font-feature-settings: 'cv11', 'ss01';
@@ -133,5 +149,41 @@
   }
   .field-sm {
     @apply px-2.5 py-1.5 text-sm;
+  }
+}
+
+@layer utilities {
+  /* Entrada suave del contenido de cada página. */
+  .rise > * {
+    animation: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .rise > *:nth-child(2) { animation-delay: 40ms; }
+  .rise > *:nth-child(3) { animation-delay: 80ms; }
+  .rise > *:nth-child(4) { animation-delay: 120ms; }
+  .rise > *:nth-child(n + 5) { animation-delay: 160ms; }
+  /* Brillo naranja de la banda. */
+  .band-glow {
+    background:
+      radial-gradient(520px 260px at 92% 0%, color-mix(in srgb, var(--brand) 55%, transparent), transparent 70%),
+      radial-gradient(380px 220px at 0% 120%, color-mix(in srgb, var(--lime) 22%, transparent), transparent 70%),
+      var(--band);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media print {
+  header,
+  nav,
+  footer {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
   }
 }

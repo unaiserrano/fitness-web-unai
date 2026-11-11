@@ -91,6 +91,7 @@ export function legacyWeek(w: Any): Week {
     days: (w?.dias ?? []).map(legacyDay),
     ...(w?.guardado ? { savedAt: str(w.guardado) } : {}),
     ...(w?.origen ? { source: str(w.origen) } : {}),
+    ...(w?.marcas && typeof w.marcas === 'object' ? { marks: Object.fromEntries(Object.entries(w.marcas).map(([k, v]) => [k, !!v])) } : {}),
   };
 }
 

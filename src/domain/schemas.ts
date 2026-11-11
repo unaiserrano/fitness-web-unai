@@ -69,6 +69,7 @@ export const weekSchema = z.object({
   days: z.array(daySchema).max(7),
   savedAt: z.string().optional(),
   source: z.string().max(40).optional(),
+  marks: z.record(z.string().max(300), z.boolean()).optional(),
 });
 
 export const rehabItemSchema = z.object({ name: text(160), reps: text(80), tempo: text(200), videoUrl: text(500) });

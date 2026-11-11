@@ -47,10 +47,22 @@ tests/                 Tests de la lógica
 npm install
 cp .env.example .env.local     # puedes dejarlo vacío para empezar
 npm run db:import              # carga los datos de la app anterior (data/legacy-export.json)
+# …o, si no tienes esos datos:
+npm run db:seed                # datos de prueba inventados (personas demo-*)
 npm run dev                    # http://localhost:3000
 ```
 
 Sin `DATABASE_URL`, los datos se guardan en `.data/pglite`. Sin `APP_PASSWORD`, en local entras sin contraseña.
+
+PGlite solo admite un proceso a la vez: **para `npm run dev` antes de lanzar `db:import` o `db:seed`** contra la base local.
+
+| Comando | Qué hace |
+| --- | --- |
+| `npm run db:seed` | Carga 2 personas de prueba (Laura y Marco), 11 semanas y 12 ejercicios. Se puede repetir. |
+| `npm run db:seed:reset` | Igual, pero antes borra las personas `demo-*`. |
+| `npm run check` | Typecheck + tests + build: lo mismo que fallaría en Vercel. |
+
+Con `DATABASE_URL` apuntando a Neon, `db:seed` pide `-- --yes` para no llenar producción de datos demo por accidente.
 
 ## Desplegar en Vercel
 
@@ -63,6 +75,17 @@ Sin `DATABASE_URL`, los datos se guardan en `.data/pglite`. Sin `APP_PASSWORD`, 
    DATABASE_URL="(la de Neon)" npm run db:import
    ```
 
+### Desde la terminal (CLI de Vercel, ya incluido en devDependencies)
+
+```bash
+npm run vercel:link     # enlaza la carpeta con el proyecto de Vercel (una vez)
+npm run vercel:env      # baja las variables de Vercel a .env.local
+npm run deploy          # despliegue de prueba (URL de preview)
+npm run deploy:prod     # despliegue a producción
+```
+
+Si en la integración de Neon activas las ramas para previews, cada preview tiene su propia copia de la base de datos y puedes probar sin tocar producción.
+
 ## Tests
 
 ```bash
@@ -74,5 +97,10 @@ Esos archivos llevan datos de clientes y **no se suben al repo** (están en `.gi
 
 ## Fases
 
-- **Fase 1 (esta):** personas, rutina con calentamiento y recomendaciones, biblioteca, nota de WhatsApp (generar y leer), PDF, progreso y volumen.
-- **Fase 2:** alimentación (registro por marca, lectura de etiquetas), diario/hitos y fotos de físico. Los datos de alimentos, dieta e hitos ya se importan a la base de datos.
+- **Fase 1:** personas, rutina con calentamiento y recomendaciones, biblioteca, nota de WhatsApp (generar y leer), PDF, progreso y volumen.
+- **Fase 2 (hecha en parte):**
+  - **Diario** (`/personas/[id]/diario`): hitos, avisos y cambios; récords de cada semana; comentarios de la persona con estrella (los de dolor o molestias se marcan solos); apuntes y rutina de cada semana.
+  - **Comida** (`/personas/[id]/dieta`): dieta por comidas y opciones, con calorías y macros calculadas y alternativas («o»), editor e impresión a PDF desde el navegador.
+  - **Alimentos** (`/alimentos`): registro por marca, compartido por todas las personas.
+  - **Progreso:** gráfica de energía y satisfacción.
+- **Pendiente:** fotos de físico (necesita almacenamiento de archivos, por ejemplo Vercel Blob) y lectura de etiquetas con IA.

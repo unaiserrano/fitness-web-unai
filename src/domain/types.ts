@@ -88,6 +88,8 @@ export interface Week {
   days: Day[];
   savedAt?: string;
   source?: string;
+  /** Comentarios marcados (true) o desmarcados (false) a mano como importantes en el Diario. */
+  marks?: Record<string, boolean>;
 }
 
 export interface RehabItem {
